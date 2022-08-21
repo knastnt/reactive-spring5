@@ -22,10 +22,11 @@ public class TemperatureController {
     @GetMapping("/temperature-stream")
     public SseEmitter temperatureStream(HttpServletRequest request){
         SseEmitter emitter = new SseEmitter();
+        log.debug("add emitter {}", emitter);
         clients.add(emitter);
 
-        emitter.onTimeout(() -> clients.remove(emitter));
-        emitter.onCompletion(() -> clients.remove(emitter));
+        emitter.onTimeout(() -> this.removeEmitter(emitter));
+        emitter.onCompletion(() -> this.removeEmitter(emitter));
 
         return emitter;
     }
@@ -35,6 +36,7 @@ public class TemperatureController {
     public void handleTemperature(Temperature temperature){
         log.info("handled temperature {}", temperature.getTemperature());
         Set<SseEmitter> deadEmitters = new HashSet<>();
+        log.debug("send to {} client(s)", clients.size());
         clients.forEach(sseEmitter -> {
             try{
                 sseEmitter.send(temperature, MediaType.APPLICATION_JSON);
@@ -42,6 +44,11 @@ public class TemperatureController {
                 deadEmitters.add(sseEmitter);
             }
         });
-        clients.removeAll(deadEmitters);
+        deadEmitters.forEach(this::removeEmitter);
+    }
+
+    private void removeEmitter(SseEmitter emitter){
+        log.debug("remove emitter {}", emitter);
+        clients.remove(emitter);
     }
 }
