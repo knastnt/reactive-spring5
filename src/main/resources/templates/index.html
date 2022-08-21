@@ -21,7 +21,7 @@
 
             eventSource.onmessage = e => {
                 const t = JSON.parse(e.data);
-                const  fixed = Number(t.value).toFixed(2);
+                const  fixed = Number(t.temperature).toFixed(2);
                 add('Temperature: ' + fixed + ' C');
             }
 
