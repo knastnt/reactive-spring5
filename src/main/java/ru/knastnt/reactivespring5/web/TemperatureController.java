@@ -19,7 +19,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class TemperatureController {
     private final Set<SseEmitter> clients = new CopyOnWriteArraySet<>();
 
-    @GetMapping("/temperature-stream")
+    @GetMapping("/ts")
     public SseEmitter temperatureStream(HttpServletRequest request){
         SseEmitter emitter = new SseEmitter();
         log.debug("add emitter {}", emitter);
