@@ -1,4 +1,4 @@
-package ru.knastnt.reactivespring5.temper;
+package ru.knastnt.reactivespring5.n1_temperature_sensor.temper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

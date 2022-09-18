@@ -1,4 +1,4 @@
-package ru.knastnt.reactivespring5.temper;
+package ru.knastnt.reactivespring5.n1_temperature_sensor.temper;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

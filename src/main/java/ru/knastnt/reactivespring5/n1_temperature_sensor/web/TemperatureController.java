@@ -1,4 +1,4 @@
-package ru.knastnt.reactivespring5.web;
+package ru.knastnt.reactivespring5.n1_temperature_sensor.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-import ru.knastnt.reactivespring5.temper.Temperature;
+import ru.knastnt.reactivespring5.n1_temperature_sensor.temper.Temperature;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;

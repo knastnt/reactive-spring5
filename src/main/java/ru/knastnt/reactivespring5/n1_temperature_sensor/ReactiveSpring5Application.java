@@ -1,4 +1,4 @@
-package ru.knastnt.reactivespring5;
+package ru.knastnt.reactivespring5.n1_temperature_sensor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
