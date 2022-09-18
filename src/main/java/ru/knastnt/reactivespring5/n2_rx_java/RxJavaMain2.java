@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.*;
 
+//see https://rxmarbles.com
+
 @Slf4j
 public class RxJavaMain2 {
     public static void main(String[] args) throws InterruptedException {
@@ -55,6 +57,21 @@ public class RxJavaMain2 {
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
-        
+        Observable.zip(
+                Observable.just("a", "b", "c", "d"),
+                Observable.just(1, 2, 3, 4),
+                (s, integer) -> s + integer
+        )
+        .subscribe(log::info);
+
+        Observable.zip(
+                Observable.interval(20, TimeUnit.MILLISECONDS).take(10),
+                Observable.interval(7, TimeUnit.MILLISECONDS).take(8),
+                (s1, s2) -> s1 + "-" + s2
+        )
+        .subscribe(log::info);
+        Thread.sleep(1000L);
+
+        //see https://rxmarbles.com
     }
 }
