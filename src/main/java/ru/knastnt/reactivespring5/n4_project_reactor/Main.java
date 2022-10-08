@@ -5,6 +5,7 @@ import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
 import reactor.core.CoreSubscriber;
 import reactor.core.Disposable;
+import reactor.core.publisher.BaseSubscriber;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
@@ -43,7 +44,7 @@ public class Main {
         Thread.sleep(210L);
         disposable.dispose();
 
-        System.out.println("------------------------ кастомный subscriber ----------------------------");
+        System.out.println("------------------------ неправильный кастомный subscriber ----------------------------");
 
         CoreSubscriber<String> coreSubscriber = new CoreSubscriber<>() {
             private Subscription subscription;
@@ -74,5 +75,27 @@ public class Main {
         };
         Flux.just("Hello", "world", "!")
                 .subscribe(coreSubscriber);
+
+        System.out.println("------------------------ правильный кастомный subscriber, удовлетворяющий TCK ----------------------------");
+
+        BaseSubscriber<String> subscriber = new BaseSubscriber<String>() {
+            @Override
+            protected void hookOnSubscribe(Subscription subscription) {
+                log.info("Initial request for 1 element.");
+                subscription.request(1L);
+            }
+
+            @Override
+            protected void hookOnNext(String value) {
+                log.info("onNext: {}", value);
+                log.info("Initial request for 1 element.");
+                request(1L);
+            }
+        };
+
+        Flux.just("Hello", "world", "!")
+                .subscribe(subscriber);
+
+        // https://projectreactor.io/docs/core/release/reference/#which-operator
     }
 }
